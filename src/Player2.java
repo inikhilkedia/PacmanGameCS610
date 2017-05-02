@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class Player extends Rectangle
+public class Player2 extends Rectangle
 {
 
 	private static final long serialVersionUID = 1L;
@@ -11,7 +11,7 @@ public class Player extends Rectangle
 	public boolean right,left,up,down;
 	private int speed = 2;
 
-	public Player(int x,int y)
+	public Player2(int x,int y)
 	{
 		setBounds(x,y,32,32);
 	}
@@ -33,6 +33,7 @@ public class Player extends Rectangle
 				break;
 			}
 		}
+
 	
 		
 		
@@ -43,6 +44,7 @@ public class Player extends Rectangle
 		}
 			
 	}
+
 	private boolean canMove(int nextx, int nexty)
 	{
 		Rectangle bounds = new Rectangle(nextx, nexty, width, height);
@@ -68,7 +70,7 @@ public class Player extends Rectangle
 	
 	public void render(Graphics g)
 	{
-		g.setColor(Color.GREEN);
+		g.setColor(Color.BLUE);
 		g.fillRect(x, y, width, height);
 	}
 }

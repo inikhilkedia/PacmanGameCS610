@@ -15,12 +15,14 @@ public class Game extends Canvas implements Runnable,KeyListener
 
 	private boolean isRunning = false;
 
-	public static final int WIDTH = 640,HEIGHT = 480;
+	public static final int WIDTH = 640,HEIGHT = 580;
 	public static final String TITLE = "Pac-Man";
 
 	private Thread thread;
 
 	public static Player player;
+	
+	public static Player2 player2;
 	
 	public static Level level;
 	
@@ -32,6 +34,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 		setMaximumSize(dimension);
 
 		addKeyListener(this);
+		player2 = new Player2(Game.WIDTH/2,Game.HEIGHT/2);
 		player = new Player(Game.WIDTH/2,Game.HEIGHT/2);
 		level = new Level("/map/map. png");
 	}
@@ -61,6 +64,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 	private void tick()
 	{
 		player.tick();
+		player2.tick();
 	}
 	
 	public void render()
@@ -76,6 +80,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 		g.setColor(Color.black);
 		g.fillRect(0,0,Game.WIDTH,Game.HEIGHT);
 		player.render(g);
+		player2.render(g);
 		level.render(g);
 		g.dispose();
 		bs.show();
@@ -86,7 +91,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 	public void run()
 	{
 		requestFocus();
-		int fps = 0;
+		int fps =0;
 		double timer = System.currentTimeMillis();
 		long lastTime = System.nanoTime();
 		double targetTick = 60.0;
@@ -145,6 +150,11 @@ public class Game extends Canvas implements Runnable,KeyListener
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) player.left = true;
 		if(e.getKeyCode() == KeyEvent.VK_UP) player.up = true;
 		if(e.getKeyCode() == KeyEvent.VK_DOWN) player.down = true;
+		
+		if(e.getKeyCode() == KeyEvent.VK_D) player2.right = true;
+		if(e.getKeyCode() == KeyEvent.VK_A) player2.left = true;
+		if(e.getKeyCode() == KeyEvent.VK_W) player2.up = true;
+		if(e.getKeyCode() == KeyEvent.VK_S) player2.down = true;
 	}
 
 	@Override
@@ -154,6 +164,11 @@ public class Game extends Canvas implements Runnable,KeyListener
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) player.left = false;
 		if(e.getKeyCode() == KeyEvent.VK_UP) player.up = false;
 		if(e.getKeyCode() == KeyEvent.VK_DOWN) player.down = false;
+		
+		if(e.getKeyCode() == KeyEvent.VK_D) player2.right = false;
+		if(e.getKeyCode() == KeyEvent.VK_A) player2.left = false;
+		if(e.getKeyCode() == KeyEvent.VK_W) player2.up = false;
+		if(e.getKeyCode() == KeyEvent.VK_S) player2.down = false;
 	}
 	
 }

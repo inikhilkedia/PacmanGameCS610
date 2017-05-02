@@ -14,7 +14,7 @@ public class Level
 	public Tile[][] tiles; 
 	
 	public List<Candy> candy;
-	
+	 
 	public Level(String path)
 	{
 		candy = new ArrayList<>();
@@ -29,7 +29,7 @@ public class Level
 			
 			for(int xx = 0; xx < width; xx++)
 			{
-				for (int yy = 0; yy < height; yy++)
+				for (int yy =   0; yy < height; yy++)
 				{
 					int val = pixels[xx + (yy*width)];
 					if(val == 0xFF000000)
