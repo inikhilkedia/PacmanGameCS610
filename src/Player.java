@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+
 public class Player extends Rectangle
 {
 
@@ -9,7 +10,8 @@ public class Player extends Rectangle
 
 
 	public boolean right,left,up,down;
-	private int speed = 2;
+	private int speed = 1;
+	int PLAYER1 = 0;
 
 	public Player(int x,int y)
 	{
@@ -30,16 +32,17 @@ public class Player extends Rectangle
 			if(this.intersects(level.candy.get(i)))
 			{
 				level.candy.remove(i);
+				PLAYER1 = PLAYER1 + 1;
 				break;
 			}
 		}
-	
-		
-		
 		if(level.candy.size() == 0)
 		{
 			//game ends, we win!
 			System.exit(1);
+		}else
+		{
+			System.out.println(PLAYER1);
 		}
 			
 	}

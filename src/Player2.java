@@ -10,10 +10,11 @@ public class Player2 extends Rectangle
 
 	public boolean right,left,up,down;
 	private int speed = 2;
-
+	int PLAYER2 = -1;
+	
 	public Player2(int x,int y)
 	{
-		setBounds(x,y,32,32);
+		setBounds(x,y,30,30);
 	}
 
 	public void tick()
@@ -30,17 +31,16 @@ public class Player2 extends Rectangle
 			if(this.intersects(level.candy.get(i)))
 			{
 				level.candy.remove(i);
+				PLAYER2 = PLAYER2 + 1;
 				break;
 			}
 		}
-
-	
-		
-		
 		if(level.candy.size() == 0)
 		{
-			//game ends, we win!
 			System.exit(1);
+		}else
+		{
+			System.out.println("Player 2" + PLAYER2);
 		}
 			
 	}
@@ -70,7 +70,7 @@ public class Player2 extends Rectangle
 	
 	public void render(Graphics g)
 	{
-		g.setColor(Color.BLUE);
+		g.setColor(Color.BLUE );
 		g.fillRect(x, y, width, height);
 	}
 }
