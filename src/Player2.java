@@ -9,20 +9,37 @@ public class Player2 extends Rectangle
 
 
 	public boolean right,left,up,down;
-	private int speed = 2;
+	private int speed = 1;
 	int PLAYER2 = -1;
 	
 	public Player2(int x,int y)
 	{
-		setBounds(x,y,30,30);
+		setBounds(x,y,25,25);
 	}
 
 	public void tick()
 	{
-		if(right && canMove(x+speed,y))x+=speed;
-		if(left && canMove(x-speed,y))x-=speed;
-		if(up && canMove(x,y-speed))y-=speed;
-		if(down && canMove(x,y+speed))y+=speed;
+		if(right && canMove(x+speed,y))
+		{
+			x+=speed;
+			System.out.println("2Right Pressed");
+		}
+	if(left && canMove(x-speed,y))
+		{
+			x-=speed;
+			System.out.println("2Left Pressed");
+		}
+	if(up && canMove(x,y-speed))
+		{
+			y-=speed;
+			System.out.println("2Up Pressed");
+		}
+	if(down && canMove(x,y+speed))
+		{
+			y+=speed;
+			System.out.println("2Down Pressed");
+		}
+	
 		
 		Level level = Game.level;
 		
@@ -40,7 +57,7 @@ public class Player2 extends Rectangle
 			System.exit(1);
 		}else
 		{
-			System.out.println("Player 2" + PLAYER2);
+			//System.out.println("Player 2" + PLAYER2);
 		}
 			
 	}

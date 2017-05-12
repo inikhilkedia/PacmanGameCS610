@@ -6,6 +6,12 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketException;
 
 import javax.swing.JFrame;
 
@@ -27,6 +33,12 @@ public class Game extends Canvas implements Runnable,KeyListener
 	public static final int PAUSE_SCREEN = 0, GAME = 1; 
 	public static int STATE = -1;
 	public boolean isEnter = false;
+	
+	static Socket clientSocket = null;
+	static DataInputStream disFromServer = null;
+	static DataOutputStream dosToClient = null;
+	static DataInputStream disFromClient = null;
+	
 	
 	public Game()
 	{
@@ -113,7 +125,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 				g.drawString("Player BLUE is winning!!", Px+400, Py+55);
 			}else
 			{
-				g.drawString("Same Score", Px+400, Py+55);
+				g.drawString("Same Socore", Px+400, Py+55);
 			}
 			
 			
@@ -184,6 +196,47 @@ public class Game extends Canvas implements Runnable,KeyListener
 		frame.setLocationRelativeTo(null);
 		
 		frame.setVisible(true);
+		
+		ServerSocket serverSocket;
+		
+
+		try 
+		{
+			ServerSocket serverSocket1 = new ServerSocket(9001);
+			System.out.println("Waiting for Client to connect...\n");
+			clientSocket = serverSocket1.accept();
+			
+			disFromServer = new DataInputStream(System.in);
+			dosToClient = new DataOutputStream(clientSocket.getOutputStream());
+			disFromClient = new DataInputStream(clientSocket.getInputStream());
+
+			System.out.println("Connection Successful");
+
+			game.start();
+			
+		} 
+		catch (SocketException e) 
+		{
+			System.out.println("Connection closed by the Client..!!");
+		} 
+		catch (IOException e) 
+		{
+			System.out.println("Connection closed at Client Side..!!!");
+			e.printStackTrace();
+		} 
+		catch (Exception e) 
+		{
+			
+		}
+		
+		try {
+			// Write final message to client's console
+			dosToClient.writeUTF("Game Over.. Final Scores are: ");
+			dosToClient.writeUTF("Player GREEN: "+player.PLAYER1+"Player BLUE: "+player2.PLAYER2);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//game.start();
 
 		game.start();
 	}
@@ -199,14 +252,49 @@ public class Game extends Canvas implements Runnable,KeyListener
 	{
 		if(STATE == GAME)
 		{
-			if(e.getKeyCode() == KeyEvent.VK_RIGHT) player.right = true;
-			if(e.getKeyCode() == KeyEvent.VK_D) player2.right = true;
-			if(e.getKeyCode() == KeyEvent.VK_LEFT) player.left = true;
-			if(e.getKeyCode() == KeyEvent.VK_A) player2.left = true;
-			if(e.getKeyCode() == KeyEvent.VK_UP) player.up = true;
-			if(e.getKeyCode() == KeyEvent.VK_W) player2.up = true;
-			if(e.getKeyCode() == KeyEvent.VK_DOWN) player.down = true;
-			if(e.getKeyCode() == KeyEvent.VK_S) player2.down = true;
+			switch (e.getKeyCode())
+			{
+				case KeyEvent.VK_RIGHT: 
+				{
+					player.right = true;
+					break;
+				}
+				case KeyEvent.VK_LEFT: 
+				{
+					player.left = true;
+					break;
+				}
+				case KeyEvent.VK_UP: 
+				{
+					player.up = true;
+					break;
+				}
+				case KeyEvent.VK_DOWN:
+				{
+					player.down = true;
+					break;
+				}
+				case KeyEvent.VK_D: 
+				{
+					player2.right = true;
+					break;
+				}
+				case KeyEvent.VK_A: 
+				{
+					player2.left = true;
+					break;
+				}
+				case KeyEvent.VK_W: 
+				{
+					player2.up = true;
+					break;
+				}
+				case KeyEvent.VK_S: 
+				{
+					player2.down = true;
+					break;
+				}
+			}
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_ENTER)
 		{
@@ -217,14 +305,49 @@ public class Game extends Canvas implements Runnable,KeyListener
 	@Override
 	public void keyReleased(KeyEvent e) 
 	{
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT) player.right = false;
-		if(e.getKeyCode() == KeyEvent.VK_D) player2.right = false;
-		if(e.getKeyCode() == KeyEvent.VK_LEFT) player.left = false;
-		if(e.getKeyCode() == KeyEvent.VK_A) player2.left = false;
-		if(e.getKeyCode() == KeyEvent.VK_UP) player.up = false;
-		if(e.getKeyCode() == KeyEvent.VK_W) player2.up = false;
-		if(e.getKeyCode() == KeyEvent.VK_DOWN) player.down = false;
-		if(e.getKeyCode() == KeyEvent.VK_S) player2.down = false;
+		switch (e.getKeyCode())
+		{
+			case KeyEvent.VK_RIGHT: 
+			{
+				player.right = false;
+				break;
+			}
+			case KeyEvent.VK_LEFT: 
+			{
+				player.left = false;
+				break;
+			}
+			case KeyEvent.VK_UP: 
+			{
+				player.up = false;
+				break;
+			}
+			case KeyEvent.VK_DOWN:
+			{
+				player.down = false;
+				break;
+			}
+			case KeyEvent.VK_D: 
+			{
+				player2.right = false;
+				break;
+			}
+			case KeyEvent.VK_A: 
+			{
+				player2.left = false;
+				break;
+			}
+			case KeyEvent.VK_W: 
+			{
+				player2.up = false;
+				break;
+			}
+			case KeyEvent.VK_S: 
+			{
+				player2.down = false;
+				break;
+			}
+		}
 	}
 	
 }
