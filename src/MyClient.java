@@ -3,6 +3,8 @@ import java.net.*;
 
 public class MyClient implements Runnable 
 {
+	public static Game game;
+	
 	Socket clientSocket = null;
 	DataInputStream disFromClient = null;
 	DataOutputStream dosToServer = null;
@@ -28,6 +30,8 @@ public class MyClient implements Runnable
 			fromServerMessage = disFromServer.readUTF(); // read last message
 															// from server
 			System.out.println("Server: " + fromServerMessage);
+			
+			game.start();
 
 		} 
 		catch (SocketException e) 
@@ -44,7 +48,8 @@ public class MyClient implements Runnable
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException 
+	{
 
 		Runnable client = new MyClient();
 		Thread clientThread = new Thread(client);
