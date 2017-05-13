@@ -1,9 +1,10 @@
+package Maze;
+
 import java.io.*;
 import java.net.*;
 
 public class MyClient implements Runnable 
 {
-	public static Game game;
 	
 	Socket clientSocket = null;
 	DataInputStream disFromClient = null;
@@ -30,8 +31,7 @@ public class MyClient implements Runnable
 			fromServerMessage = disFromServer.readUTF(); // read last message
 															// from server
 			System.out.println("Server: " + fromServerMessage);
-			
-			game.start();
+		
 
 		} 
 		catch (SocketException e) 

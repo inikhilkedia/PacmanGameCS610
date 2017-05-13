@@ -1,3 +1,5 @@
+package Maze;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -238,7 +240,7 @@ public class Game extends Canvas implements Runnable,KeyListener
 		}
 		//game.start();
 
-		game.start();
+		//game.start();
 	}
 
 	@Override
